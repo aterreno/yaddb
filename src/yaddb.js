@@ -77,6 +77,26 @@ class Yaddb {
     }
     return innerScan(params, this);
   }
+
+  async recursiveQuery(params) {
+    let promiseResults = [];
+    async function innerQuery(p, self) {
+      const data = await self.docClient.query(p).promise();
+      promiseResults = promiseResults.concat(data.Items);
+      if (data.LastEvaluatedKey) {
+        return innerQuery(
+          {
+            ...p,
+            ...{ ExclusiveStartKey: data.LastEvaluatedKey },
+          },
+          self
+        );
+      }
+
+      return promiseResults;
+    }
+    return innerQuery(params, this);
+  }
 }
 
-module.exports = options => new Yaddb(options);
+module.exports = (options) => new Yaddb(options);
