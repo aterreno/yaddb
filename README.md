@@ -1,6 +1,6 @@
 # yaddb
 
-Yet Another Dynamo DB lib
+Yet Another Dynamo DB library
 
 # Motivation
 
