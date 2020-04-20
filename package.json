@@ -1,6 +1,6 @@
 {
   "name": "yaddb",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Yet Another Dynamo Data Base Library",
   "main": "src/yaddb.js",
   "scripts": {
@@ -52,7 +52,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/labradorcouk/yaddb.git"
+    "url": "git+https://github.com/aterreno/yaddb.git"
   },
   "keywords": [
     "dynamodb",
@@ -62,7 +62,7 @@
     "amazon"
   ],
   "bugs": {
-    "url": "https://github.com/labradorcouk/yaddb/issues"
+    "url": "https://github.com/aterreno/yaddb/issues"
   },
-  "homepage": "https://github.com/labradorcouk/yaddb#readme"
+  "homepage": "https://github.com/aterreno/yaddb#readme"
 }
