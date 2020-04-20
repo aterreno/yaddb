@@ -7,10 +7,13 @@ const yaddb = require('../src/yaddb')({
   region: 'localRegion',
 });
 
-beforeAll(async done => {
+beforeAll(async (done) => {
   await yaddb.createTable({
     TableName: 'Cars',
-    KeySchema: [{ AttributeName: 'id', KeyType: 'HASH' }, { AttributeName: 'status', KeyType: 'RANGE' }],
+    KeySchema: [
+      { AttributeName: 'id', KeyType: 'HASH' },
+      { AttributeName: 'status', KeyType: 'RANGE' },
+    ],
     AttributeDefinitions: [
       { AttributeName: 'id', AttributeType: 'N' },
       { AttributeName: 'status', AttributeType: 'S' },
@@ -20,25 +23,27 @@ beforeAll(async done => {
       WriteCapacityUnits: 5,
     },
   });
-  carsData.forEach(async car => {
-    const putParams = {
-      TableName: 'Cars',
-      Item: {
-        id: car.id,
-        type: car.type,
-        name: car.name,
-        manufacturer: car.manufacturer,
-        fuel_type: car.fuel_type,
-        description: car.description,
-        status: car.status,
-      },
-    };
-    await yaddb.put(putParams);
-  });
+  await Promise.all(
+    carsData.map(async (car) => {
+      const putParams = {
+        TableName: 'Cars',
+        Item: {
+          id: car.id,
+          type: car.type,
+          name: car.name,
+          manufacturer: car.manufacturer,
+          fuel_type: car.fuel_type,
+          description: car.description,
+          status: car.status,
+        },
+      };
+      await yaddb.put(putParams);
+    })
+  );
   done();
 });
 
-afterAll(async done => {
+afterAll(async (done) => {
   await yaddb.deleteTable({
     TableName: 'Cars',
   });
